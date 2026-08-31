@@ -1,0 +1,631 @@
+<!--
+  ============================================================================
+  index.html: Personal portfolio for Hadi Shiban
+  ----------------------------------------------------------------------------
+  Plain HTML + CSS only. The only JavaScript is a short, commented block at the
+  bottom of this file that (1) opens/closes the mobile menu and (2) fades
+  sections in as you scroll. No frameworks, no build step.
+
+  HOW THE PIECES FIT TOGETHER
+  - This file is the STRUCTURE (the content and its order).
+  - style.css is the LOOK (colors, spacing, fonts, layout).
+  - Google Fonts + Font Awesome are loaded from a CDN in <head> below.
+
+  TO DEPLOY ON GITHUB PAGES
+  1. Put index.html and style.css in the root of your repo.
+  2. Push to GitHub.
+  3. Repo → Settings → Pages → Source: "Deploy from a branch" → main → /root.
+  4. Wait ~1 minute, then open the URL GitHub shows you.
+  ============================================================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- charset first so the browser reads special characters correctly -->
+  <meta charset="UTF-8" />
+
+  <!-- Makes the site scale properly on phones instead of showing a tiny desktop page -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Shown in search results and when the link is shared -->
+  <meta name="description" content="Portfolio of Hadi Shiban: neuroscience and premed student building at the meeting point of medicine, technology, and contemplative practice." />
+
+  <title>Hadi Shiban | Portfolio</title>
+
+  <!--
+    GOOGLE FONTS
+    "preconnect" is a hint that tells the browser to start the connection to the
+    font servers early, so text renders a little faster.
+    Fraunces  = calm humanist serif, used for headings.
+    Nunito Sans = clean, friendly sans, used for body text.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Nunito+Sans:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!--
+    FONT AWESOME (icons for the Skills and Contact sections).
+    This one <link> gives you access to every free icon via <i class="fa-..."></i>.
+  -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+
+  <!-- Our own styles. Loaded last so it can override anything above. -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!--
+    SKIP LINK: hidden until focused with the keyboard. Lets keyboard and
+    screen-reader users jump straight to the content, past the nav.
+  -->
+  <a class="skip-link" href="#home">Skip to content</a>
+
+  <!--
+    ========================================================================
+    NAVIGATION BAR
+    - <header> stays pinned to the top of the screen (see .site-header in CSS).
+    - Links point to #ids further down the page; smooth scrolling is done in
+      CSS with `scroll-behavior: smooth`, no JavaScript needed for that.
+    - The button is only visible on small screens; it toggles the menu open.
+    ========================================================================
+  -->
+  <header class="site-header">
+    <nav class="nav container" aria-label="Primary">
+      <a class="nav__brand" href="#home">Hadi&nbsp;Shiban</a>
+
+      <!-- aria-expanded / aria-controls tell assistive tech what this button does -->
+      <button
+        class="nav__toggle"
+        aria-expanded="false"
+        aria-controls="nav-menu"
+        aria-label="Open menu"
+      >
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+      </button>
+
+      <ul class="nav__list" id="nav-menu">
+        <li><a class="nav__link" href="#home">Home</a></li>
+        <li><a class="nav__link" href="#about">About</a></li>
+        <li><a class="nav__link" href="#goals">Goals</a></li>
+        <li><a class="nav__link" href="#skills">Skills</a></li>
+        <li><a class="nav__link" href="#projects">Projects</a></li>
+        <li><a class="nav__link" href="#interests">Interests</a></li>
+        <li><a class="nav__link" href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!--
+      ======================================================================
+      1. HERO
+      A full-width image with a dark overlay so white text stays readable.
+      Swap the <img> src for your own photo (put it in an images/ folder).
+      ======================================================================
+    -->
+    <section id="home" class="hero">
+      <!-- Decorative background photo. alt="" because it adds mood, not information. -->
+      <img
+        class="hero__bg"
+        src="public/images/Hero_Image.jpeg"
+        alt=""
+      />
+      <div class="hero__overlay"></div>
+
+      <div class="hero__content container">
+        <p class="hero__eyebrow">Portfolio</p>
+        <h1 class="hero__title">Hadi Shiban</h1>
+        <p class="hero__tagline">
+          Neuroscience &amp; premed student building at the meeting point of
+          medicine, technology, and contemplative practice.
+        </p>
+        <a class="btn" href="#projects">See my work</a>
+      </div>
+    </section>
+
+    <!--
+      ======================================================================
+      2. ABOUT / BIO
+      Two columns on wide screens (text + portrait), one column on phones.
+      ======================================================================
+    -->
+    <section id="about" class="section">
+      <div class="container about reveal">
+        <div class="about__text">
+          <p class="section__eyebrow">About</p>
+          <h2 class="section__title">A little about me</h2>
+
+          <p>
+            Hi, I'm Hadi. I'm a neuroscience student on the premed track, and
+            most of what I care about lives somewhere between medicine,
+            technology, and the inner life.
+          </p>
+          <p>
+            Right now  intern in a lab at Northwestern studying Tibetan dream
+            yoga; I look at how these old contemplative practices affect things
+            like cognitive flexibility, how awake and aware people feel during
+            the day, and their broader sense of well-being. It's a strange and
+            wonderful place to spend time, right where meditation traditions and
+            modern neuroscience actually have something to say to each other.
+          </p>
+          <p>
+            That belief, that old practice and new science are partners rather
+            than rivals, runs through everything else I make. I'm trained as an
+            insomnia coach, using ACT-based methods. I also started
+            <strong>Medicineyourway</strong> (it used to be called medicine2.0),
+            which grew out of a simple hope:
+            that understanding medical information and making decisions about
+            care could be more accessible and less expensive for physicians and
+            patients alike.
+          </p>
+          <p>
+            When I get to medicine, I want to help tilt it toward prevention and
+            lifestyle: pairing the technological miracles of modern treatment with the
+            quieter ones that come from a connected, healthy, and reflective life. Med school is
+            the next step, but I'm not waiting for it to start building. I want
+            to be where medicine and AI meet, using code and clinical knowledge
+            together to make care more affordable, easier to understand, and
+            easier to reach.
+          </p>
+          <p>
+            This site is where that build-as-you-go habit lives: a running log
+            of the projects, research, and ideas I'm putting toward that future.
+          </p>
+        </div>
+
+        <!--
+          PORTRAIT SLIDESHOW
+          Two photos in one box that cross-fade on a loop. The animation is
+          100% CSS (see .slideshow in style.css); no JavaScript. To add a
+          third photo, add another <img> here and extend the @keyframes.
+        -->
+        <figure class="about__portrait">
+          <div class="slideshow">
+            <img
+              class="slideshow__img"
+              src="public/images/Portrait_1.jpeg"
+              alt="Hadi Shiban"
+            />
+            <img
+              class="slideshow__img"
+              src="public/images/Portrait_2.jpeg"
+              alt="Hadi Shiban"
+            />
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <!--
+      ======================================================================
+      FULL-WIDTH IMAGE BAND (section break; pure mood, no text)
+      Duplicate this <figure> anywhere you want a visual breather.
+      ======================================================================
+    -->
+    <figure class="image-band">
+      <img src="public/images/Horizontal_placeholder_2.jpeg" alt="" />
+    </figure>
+
+    <!--
+      ======================================================================
+      QUOTE BREAK #1
+      Replace the text between the quotation marks and the attribution.
+      ======================================================================
+    -->
+    <aside class="quote" aria-label="Quote">
+      <blockquote class="container">
+        <p>&ldquo;See God in all men of whatever race or religion.&rdquo;</p>
+        <cite>Paramahansa Yogananda</cite>
+      </blockquote>
+    </aside>
+
+    <!--
+      ======================================================================
+      3. PERSONAL GOALS
+      Distinct from "About": About is who I am, Goals is where I'm headed.
+      Three short cards instead of a paragraph so it stays scannable.
+      ======================================================================
+    -->
+    <section id="goals" class="section section--tint">
+      <div class="container reveal">
+        <p class="section__eyebrow">Where I'm headed</p>
+        <h2 class="section__title">Personal goals</h2>
+        <p class="section__intro">
+          A few things I'm actively working toward: academic, professional, and
+          personal. I update these as they change.
+        </p>
+
+        <div class="goals__grid">
+          <!-- Card: duplicate a whole <article> to add another goal track -->
+          <article class="card goal">
+            <i class="fa-solid fa-graduation-cap goal__icon" aria-hidden="true"></i>
+            <h3 class="goal__title">Academic</h3>
+            <ul class="goal__list">
+              <li>Finish my neuroscience B.S. with research honors.</li>
+              <li>Prepare for and take the MCAT.</li>
+              <li>Submit a strong medical school application.</li>
+            </ul>
+          </article>
+
+          <article class="card goal">
+            <i class="fa-solid fa-heart-pulse goal__icon" aria-hidden="true"></i>
+            <h3 class="goal__title">Professional</h3>
+            <ul class="goal__list">
+              <li>Ship <strong>Medicineyourway</strong> to a first public release.</li>
+              <li>Turn my lab research into a published paper.</li>
+              <li>Work where clinical medicine and AI overlap.</li>
+            </ul>
+          </article>
+
+          <article class="card goal">
+            <i class="fa-solid fa-seedling goal__icon" aria-hidden="true"></i>
+            <h3 class="goal__title">Personal growth</h3>
+            <ul class="goal__list">
+              <li>Work toward homesteading with my family.</li>
+              <li>Keep a steady daily contemplative practice.</li>
+              <li>Keep growing as a musician and a reader.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!--
+      ======================================================================
+      4. SKILLS
+      Two groups (technical + personal). Each item is an icon + label + one
+      short line. Icons come from Font Awesome (loaded in <head>).
+      ======================================================================
+    -->
+    <section id="skills" class="section">
+      <div class="container reveal">
+        <p class="section__eyebrow">What I bring</p>
+        <h2 class="section__title">Skills</h2>
+
+        <h3 class="skills__group-title">Technical</h3>
+        <div class="skills__grid">
+          <!-- One skill. Copy a whole .skill block to add another. -->
+          <div class="skill">
+            <i class="fa-brands fa-html5" aria-hidden="true"></i>
+            <div>
+              <h4>HTML &amp; CSS</h4>
+              <p>Hand-written, semantic, responsive layouts.</p>
+            </div>
+          </div>
+          <div class="skill">
+            <i class="fa-brands fa-js" aria-hidden="true"></i>
+            <div>
+              <h4>JavaScript</h4>
+              <p>Vanilla JS for interactivity; currently learning.</p>
+            </div>
+          </div>
+          <div class="skill">
+            <i class="fa-brands fa-github" aria-hidden="true"></i>
+            <div>
+              <h4>Git &amp; GitHub</h4>
+              <p>Version control, branches, GitHub Pages.</p>
+            </div>
+          </div>
+          <div class="skill">
+            <i class="fa-brands fa-python" aria-hidden="true"></i>
+            <div>
+              <h4>Python</h4>
+              <p>Data wrangling and analysis for research.</p>
+            </div>
+          </div>
+          <div class="skill">
+            <i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>
+            <div>
+              <h4>Responsive design</h4>
+              <p>Mobile-first layouts with flexbox and grid.</p>
+            </div>
+          </div>
+          <div class="skill">
+            <i class="fa-solid fa-universal-access" aria-hidden="true"></i>
+            <div>
+              <h4>Accessibility basics</h4>
+              <p>Labels, alt text, keyboard navigation.</p>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="skills__group-title">Personal</h3>
+        <div class="skills__grid">
+          <div class="skill">
+            <i class="fa-solid fa-spa" aria-hidden="true"></i>
+            <div>
+              <h4>Contemplative practice</h4>
+              <p>A steady daily meditation and movement practice.</p>
+            </div>
+          </div>
+          <div class="skill">
+            <i class="fa-solid fa-book-open" aria-hidden="true"></i>
+            <div>
+              <h4>Research &amp; writing</h4>
+              <p>Literature review and clear science writing.</p>
+            </div>
+          </div>
+          <div class="skill">
+            <i class="fa-solid fa-ear-listen" aria-hidden="true"></i>
+            <div>
+              <h4>Deep listening</h4>
+              <p>Presence with people in difficulty.</p>
+            </div>
+          </div>
+          <div class="skill">
+            <i class="fa-solid fa-leaf" aria-hidden="true"></i>
+            <div>
+              <h4>Discipline</h4>
+              <p>Consistent daily practice over intensity.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Another mood band before the project grid -->
+    <figure class="image-band">
+      <img src="public/images/Horizontal_Placeholder.jpeg" alt="" />
+    </figure>
+
+    <!--
+      ======================================================================
+      5. PROJECTS
+      The grid auto-flows: add another .project-card and it drops into place.
+      Everything between "COPY FROM HERE" and "TO HERE" is one reusable card.
+      ======================================================================
+    -->
+    <section id="projects" class="section section--tint">
+      <div class="container reveal">
+        <p class="section__eyebrow">Things I've built</p>
+        <h2 class="section__title">Projects</h2>
+        <p class="section__intro">
+          A running list; I add a card each time I finish something this
+          semester.
+        </p>
+
+        <div class="projects__grid">
+          <!-- ===== COPY FROM HERE ===== -->
+          <article class="card project-card">
+            <img
+              class="project-card__img"
+              src="public/images/Medicineyourway.SS.png"
+              alt="Screenshot of the Medicineyourway project"
+            />
+            <div class="project-card__body">
+              <h3 class="project-card__title">Medicineyourway</h3>
+              <p class="project-card__desc">
+                Born from hoping to make medical information and decision-making
+                more accessible and less expensive for physicians and patients
+                alike. Formerly medicine2.0.
+              </p>
+              <ul class="project-card__tags">
+                <li class="tag">HTML</li>
+                <li class="tag">CSS</li>
+                <li class="tag">JavaScript</li>
+                <li class="tag">AI</li>
+              </ul>
+            </div>
+          </article>
+          <!-- ===== TO HERE ===== -->
+
+          <article class="card project-card">
+            <img
+              class="project-card__img"
+              src="public/images/SS_Portfolio.png"
+              alt="Screenshot of this portfolio site"
+            />
+            <div class="project-card__body">
+              <h3 class="project-card__title">This portfolio</h3>
+              <p class="project-card__desc">
+                The site you're on now; hand-coded to learn HTML and CSS from
+                the ground up.
+              </p>
+              <ul class="project-card__tags">
+                <li class="tag">HTML</li>
+                <li class="tag">CSS</li>
+                <li class="tag">GitHub Pages</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!--
+      ======================================================================
+      QUOTE BREAK #2
+      ======================================================================
+    -->
+    <aside class="quote" aria-label="Quote">
+      <blockquote class="container">
+        <p>&ldquo;Happiness and well-being are actually best regarded as skills.&rdquo;</p>
+        <cite>Richard Davidson</cite>
+      </blockquote>
+    </aside>
+
+    <!--
+      ======================================================================
+      6. INTERESTS / BEYOND THE CODE
+      Lighter styling on purpose: a plain icon list, no heavy cards.
+      ======================================================================
+    -->
+    <section id="interests" class="section">
+      <div class="container reveal">
+        <p class="section__eyebrow">Beyond the code</p>
+        <h2 class="section__title">Interests</h2>
+        <p class="section__intro">
+          The parts of life that make the rest of this list possible.
+        </p>
+
+        <ul class="interests__list">
+          <li class="interest">
+            <i class="fa-solid fa-music" aria-hidden="true"></i>
+            <div>
+              <h3>Music</h3>
+              <p>The oud is one piece of it; mostly I just like to be musical. It's my main creative outlet.</p>
+            </div>
+          </li>
+          <li class="interest">
+            <i class="fa-solid fa-book" aria-hidden="true"></i>
+            <div>
+              <h3>Reading</h3>
+              <p>Books on spiritual, scientific, natural, and fantastical subjects.</p>
+            </div>
+          </li>
+          <li class="interest">
+            <i class="fa-solid fa-spa" aria-hidden="true"></i>
+            <div>
+              <h3>Yoga &amp; breathwork</h3>
+              <p>A daily mat practice that keeps everything else steady.</p>
+            </div>
+          </li>
+          <li class="interest">
+            <i class="fa-solid fa-house-chimney" aria-hidden="true"></i>
+            <div>
+              <h3>Homesteading</h3>
+              <p>Working toward a homestead life with my family.</p>
+            </div>
+          </li>
+          <li class="interest">
+            <i class="fa-solid fa-moon" aria-hidden="true"></i>
+            <div>
+              <h3>Dream yoga</h3>
+              <p>The Tibetan practice I study in the lab, and at night.</p>
+            </div>
+          </li>
+          <li class="interest">
+            <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
+            <div>
+              <h3>Tea &amp; long walks</h3>
+              <p>The unglamorous rituals that do most of the work.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Final mood band before contact. Reusing image 2 for now; drop a new
+         photo in here whenever you have one. -->
+    <figure class="image-band">
+      <img src="public/images/Horizontal_placeholder_2.jpeg" alt="" />
+    </figure>
+
+    <!--
+      ======================================================================
+      7. CONTACT
+      The form has NO backend. Submitting it does nothing yet.
+      To make it actually send email, sign up at https://formspree.io (free
+      tier), then change the <form> line to:
+        <form action="https://formspree.io/f/YOUR_ID" method="POST">
+      ======================================================================
+    -->
+    <section id="contact" class="section section--tint">
+      <div class="container reveal">
+        <p class="section__eyebrow">Say hello</p>
+        <h2 class="section__title">Contact</h2>
+
+        <div class="contact__grid">
+          <form class="contact__form" action="https://formspree.io/f/mgaeavlg" method="POST">
+            <!-- Each field: <label> tied to its input by matching for/id -->
+            <div class="field">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required />
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn">Send message</button>
+          </form>
+
+          <div class="contact__aside">
+            <h3>Elsewhere</h3>
+            <ul class="socials">
+              <li>
+                <a href="mailto:hgshiban@asu.edu">
+                  <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                  hgshiban@asu.edu
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!--
+    ========================================================================
+    JAVASCRIPT
+    Kept tiny and commented. Two jobs only:
+      1. Open/close the mobile menu.
+      2. Fade sections in as they scroll into view.
+    Smooth scrolling itself is handled by CSS (scroll-behavior: smooth).
+    ========================================================================
+  -->
+  <script>
+    // Add a "js" class to <html> so CSS knows JavaScript is running.
+    // The fade-in effect starts elements hidden, so we only want that to
+    // happen when JS is available to reveal them again.
+    document.documentElement.classList.add("js");
+
+    // ---- 1. Mobile navigation toggle ----
+    var toggle = document.querySelector(".nav__toggle");
+    var menu = document.querySelector("#nav-menu");
+
+    toggle.addEventListener("click", function () {
+      // classList.toggle returns true if the class is now present
+      var isOpen = menu.classList.toggle("is-open");
+      toggle.setAttribute("aria-expanded", isOpen);
+      toggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+    });
+
+    // Close the menu after a link is tapped (only matters on small screens)
+    menu.addEventListener("click", function (event) {
+      if (event.target.classList.contains("nav__link")) {
+        menu.classList.remove("is-open");
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.setAttribute("aria-label", "Open menu");
+      }
+    });
+
+    // ---- 2. Gentle fade-in on scroll ----
+    // IntersectionObserver tells us when an element enters the viewport.
+    var revealItems = document.querySelectorAll(".reveal");
+
+    if ("IntersectionObserver" in window) {
+      var observer = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target); // animate once, then stop watching
+            }
+          });
+        },
+        { threshold: 0.15 } // fire when ~15% of the element is visible
+      );
+
+      revealItems.forEach(function (item) {
+        observer.observe(item);
+      });
+    } else {
+      // Very old browser: just show everything, no animation.
+      revealItems.forEach(function (item) {
+        item.classList.add("is-visible");
+      });
+    }
+  </script>
+</body>
+</html>
