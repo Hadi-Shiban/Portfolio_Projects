@@ -1,0 +1,797 @@
+/* ==========================================================================
+   style.css: "calming nature" theme for Hadi Shiban's portfolio
+   --------------------------------------------------------------------------
+   Reading order:
+     1. Design tokens (colors, spacing, radius) as CSS variables
+     2. Reset + base element styles
+     3. Reusable helpers (.container, .btn, .card, section headings)
+     4. Each section in page order (nav, hero, about, ... , footer)
+     5. Scroll fade-in animation
+     6. Media queries (responsive tweaks) + reduced-motion
+
+   Comments explain WHY a rule exists, not just what it does.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. DESIGN TOKENS
+   Defining colors and sizes ONCE here means you change the whole site's mood
+   by editing a single line. Everything below refers to these names.
+   ========================================================================== */
+:root {
+  /* --- Soft earth-tone palette (nothing neon, nothing pure black/white) --- */
+  --color-cream:      #f7f2e8; /* page background; warm and low-glare */
+  --color-surface:    #fffdf8; /* cards; a touch lighter than the page */
+  --color-sage:       #9db08c; /* primary soft green */
+  --color-sage-deep:  #6e8060; /* stronger green for icons / hovers */
+  --color-moss:       #47543d; /* dark green for headings */
+  --color-clay:       #c07e57; /* terracotta accent; buttons, links */
+  --color-clay-deep:  #a5623c; /* clay on hover */
+  --color-ink:        #3b392f; /* body text; soft near-black, easier on eyes */
+  --color-muted:      #7a7566; /* secondary text */
+  --color-border:     #e7decb; /* hairline borders */
+
+  /* --- Shape --- */
+  --radius:     20px;  /* generous rounding = soft, non-corporate feel */
+  --radius-sm:  12px;
+  --shadow-soft: 0 12px 28px rgba(71, 84, 61, 0.10); /* green-tinted, not grey */
+  --shadow-lift: 0 18px 40px rgba(71, 84, 61, 0.16); /* used on hover */
+
+  /* --- Layout --- */
+  --maxw: 1080px; /* content never stretches wider than this = comfortable line length */
+}
+
+
+/* ==========================================================================
+   2. RESET + BASE
+   ========================================================================== */
+
+/* border-box makes width/padding math predictable: padding no longer adds to width */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Kill default margins so spacing only comes from rules we write on purpose */
+* {
+  margin: 0;
+}
+
+html {
+  /* Native smooth scrolling for the nav's #anchor links; no JavaScript needed */
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  font-family: "Nunito Sans", system-ui, -apple-system, Arial, sans-serif;
+
+  /* Generous line-height + slight letter-spacing = unhurried, easy to read */
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+
+  /* Fluid font size: 16px on small screens, up to ~18px on large ones.
+     clamp(min, preferred, max) grows with the viewport but never past the max. */
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+
+  -webkit-font-smoothing: antialiased; /* slightly softer text on WebKit */
+}
+
+/* Images should never overflow their container and should sit on the text baseline nicely */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Headings use the serif face; lighter weight keeps them calm, not shouty */
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Fraunces", Georgia, "Times New Roman", serif;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--color-moss);
+}
+
+/* Space between stacked paragraphs so blocks of text can breathe */
+p + p {
+  margin-top: 1rem;
+}
+
+/* In-content links pick up the clay accent */
+a {
+  color: var(--color-clay-deep);
+}
+
+/* A clear, consistent focus ring for keyboard users on every interactive element */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--color-sage);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+
+/* ==========================================================================
+   3. REUSABLE HELPERS
+   ========================================================================== */
+
+/* Centered content column with breathing room on the sides.
+   margin-inline: auto centers it; padding-inline keeps text off screen edges. */
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+}
+
+/* Vertical rhythm for every major section. clamp() gives smaller gaps on phones. */
+.section {
+  padding-block: clamp(3.5rem, 8vw, 7rem);
+}
+
+/* Alternating sections get a faint tint so the page reads as distinct bands */
+.section--tint {
+  background-color: #f2ecdd;
+}
+
+/* Sticky nav is ~68px tall; this stops it from covering a section's heading
+   when you jump to that section via an #anchor link. */
+section[id],
+.hero {
+  scroll-margin-top: 5rem;
+}
+
+/* --- Button --- */
+.btn {
+  display: inline-block;
+  background-color: var(--color-clay);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 0.85rem 1.7rem;
+  border: none;
+  border-radius: 999px;         /* full pill = friendly, soft */
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  /* Transition only the properties that change, so hover feels smooth not janky */
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.btn:hover {
+  background-color: var(--color-clay-deep);
+  transform: translateY(-2px);  /* tiny lift invites the click */
+  box-shadow: var(--shadow-lift);
+}
+
+/* --- Card (shared shell for goals + projects) --- */
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lift);
+}
+
+/* --- Section heading pattern (eyebrow + title + intro) --- */
+.section__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.22em;       /* wide tracking makes small caps feel deliberate */
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-clay);
+  margin-bottom: 0.6rem;
+}
+.section__title {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  margin-bottom: 1rem;
+}
+.section__intro {
+  max-width: 60ch;              /* ~60 characters per line = easiest to read */
+  color: var(--color-muted);
+  margin-bottom: 2.5rem;
+}
+
+/* Screen-reader-only skip link: off-screen until it receives keyboard focus */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--color-moss);
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: 0 0 var(--radius-sm) 0;
+  z-index: 100;
+}
+.skip-link:focus {
+  left: 0; /* becomes visible when tabbed to */
+}
+
+
+/* ==========================================================================
+   4a. NAVIGATION BAR
+   ========================================================================== */
+.site-header {
+  position: sticky;            /* stays at the top as you scroll... */
+  top: 0;                      /* ...pinned to the very top */
+  z-index: 50;                 /* sit above page content */
+  background-color: rgba(247, 242, 232, 0.85); /* semi-transparent cream */
+  backdrop-filter: blur(8px);  /* frosted-glass effect over content behind it */
+  border-bottom: 1px solid var(--color-border);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* brand on the left, links on the right */
+  gap: 1rem;
+  padding-block: 0.9rem;
+  position: relative;            /* anchor for the mobile dropdown menu */
+}
+
+.nav__brand {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--color-moss);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+/* Hamburger button is hidden on desktop, shown in the mobile media query below */
+.nav__toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: var(--color-moss);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+}
+
+.nav__list {
+  display: flex;
+  gap: clamp(0.75rem, 2vw, 1.75rem);
+  list-style: none;
+  padding: 0;
+}
+
+.nav__link {
+  text-decoration: none;
+  color: var(--color-ink);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.4rem 0.15rem;
+  border-bottom: 2px solid transparent; /* reserve space so hover doesn't shift layout */
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.nav__link:hover {
+  color: var(--color-clay-deep);
+  border-bottom-color: var(--color-sage);
+}
+
+
+/* ==========================================================================
+   4b. HERO
+   ========================================================================== */
+.hero {
+  position: relative;           /* so the background image + overlay can be layered */
+  min-height: min(88vh, 720px); /* tall, but never absurdly so on big monitors */
+  display: grid;
+  place-items: center;          /* centers the content box both ways */
+  text-align: center;
+  overflow: hidden;             /* clip the oversized background image */
+  padding: 4rem 0;
+}
+
+/* The photo fills the hero and is cropped to fit rather than squished */
+.hero__bg {
+  position: absolute;
+  inset: 0;                     /* top/right/bottom/left: 0 */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Dark wash over the photo so white text stays readable on any image */
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(59, 57, 47, 0.35),
+    rgba(59, 57, 47, 0.6)
+  );
+}
+
+.hero__content {
+  position: relative;           /* lift above the overlay */
+  z-index: 1;
+  color: #fff;
+  max-width: 40rem;
+}
+.hero__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  opacity: 0.9;
+}
+.hero__title {
+  color: #fff;                  /* override the moss-green heading default */
+  font-size: clamp(2.6rem, 7vw, 4.5rem);
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+.hero__tagline {
+  font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+  margin-bottom: 2rem;
+  text-wrap: balance;           /* keeps the two lines roughly equal length */
+}
+
+
+/* ==========================================================================
+   4c. ABOUT
+   ========================================================================== */
+.about {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr; /* text wider than portrait */
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+.about__text p {
+  color: var(--color-ink);
+}
+.about__portrait {
+  margin: 0;
+}
+
+/* --- Portrait slideshow (auto cross-fade between two photos) ---
+   position:relative on the box + position:absolute on the images stacks them
+   in the same spot instead of one below the other. */
+.slideshow {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5 / 6;          /* fixed shape so any photo crops cleanly */
+  border-radius: var(--radius);
+  overflow: hidden;             /* clip the photos to the rounded corners */
+  box-shadow: var(--shadow-soft);
+}
+.slideshow__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;                   /* start hidden; the animation fades it in */
+  animation: portrait-fade 12s infinite;
+}
+/* Negative delay = "start already partway through", so photo 1 is fully
+   visible the moment the page loads (no blank flash). */
+.slideshow__img:first-child {
+  animation-delay: -2s;
+}
+/* Photo 2 stays exactly 6s (half the loop) behind photo 1, so one fades out
+   as the other fades in. */
+.slideshow__img:nth-child(2) {
+  animation-delay: 4s;
+}
+@keyframes portrait-fade {
+  0%   { opacity: 0; }
+  6%   { opacity: 1; }   /* fade in */
+  44%  { opacity: 1; }   /* hold on screen */
+  50%  { opacity: 0; }   /* fade out */
+  100% { opacity: 0; }   /* stay hidden until this photo's next turn */
+}
+
+
+/* ==========================================================================
+   4d. FULL-WIDTH IMAGE BANDS
+   ========================================================================== */
+.image-band {
+  margin: 0;
+}
+.image-band img {
+  width: 100%;
+  /* Fluid height: short on phones, taller on desktop, but bounded both ways */
+  height: clamp(220px, 38vh, 420px);
+  object-fit: cover;
+}
+
+
+/* ==========================================================================
+   4e. QUOTE BREAKS
+   ========================================================================== */
+.quote {
+  background-color: var(--color-sage);
+  color: #fff;
+  text-align: center;
+  padding-block: clamp(3rem, 7vw, 5rem);
+}
+.quote blockquote {
+  margin: 0;
+}
+.quote p {
+  font-family: "Fraunces", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  line-height: 1.5;
+  max-width: 55ch;
+  margin: 0 auto 1rem;
+  text-wrap: balance;
+}
+.quote cite {
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+
+/* ==========================================================================
+   4f. GOALS
+   ========================================================================== */
+.goals__grid {
+  display: grid;
+  /* auto-fit + minmax = cards wrap to a new row on their own when space runs out.
+     Add a 4th card in the HTML and the layout just absorbs it. */
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+.goal__icon {
+  font-size: 1.6rem;
+  color: var(--color-sage-deep);
+  margin-bottom: 0.75rem;
+}
+.goal__title {
+  font-size: 1.3rem;
+  margin-bottom: 0.75rem;
+}
+.goal__list {
+  padding-left: 1.1rem;         /* room for the bullets */
+  color: var(--color-muted);
+}
+.goal__list li + li {
+  margin-top: 0.5rem;
+}
+
+
+/* ==========================================================================
+   4g. SKILLS
+   ========================================================================== */
+.skills__group-title {
+  font-size: 1.2rem;
+  margin: 2rem 0 1.25rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--color-border);
+}
+.skills__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem 2rem;
+}
+.skill {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+}
+/* The icon sits in a soft circular chip so it reads as an "icon", not stray text */
+.skill i {
+  font-size: 1.3rem;
+  color: var(--color-sage-deep);
+  background-color: rgba(157, 176, 140, 0.18); /* faint sage tint */
+  width: 2.6rem;
+  height: 2.6rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  flex-shrink: 0;              /* never let the circle get squashed */
+}
+.skill h4 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+.skill p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+
+/* ==========================================================================
+   4h. PROJECTS
+   ========================================================================== */
+.projects__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.75rem;
+}
+/* Override the shared .card padding: we want the image flush to the card edges */
+.project-card {
+  padding: 0;
+  overflow: hidden;            /* clip the image corners to the card's radius */
+  display: flex;
+  flex-direction: column;
+}
+.project-card__img {
+  width: 100%;
+  aspect-ratio: 16 / 10;       /* every project image is the same shape */
+  object-fit: cover;
+}
+.project-card__body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;                     /* body fills the card so link rows line up across cards */
+}
+.project-card__title {
+  font-size: 1.3rem;
+}
+.project-card__desc {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+.project-card__tags {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.tag {
+  background-color: rgba(157, 176, 140, 0.18);
+  color: var(--color-moss);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+}
+.project-card__links {
+  margin-top: auto;            /* push links to the bottom of the card */
+  display: flex;
+  gap: 1.25rem;
+  padding-top: 0.5rem;
+}
+.project-card__links a {
+  color: var(--color-clay-deep);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.project-card__links a:hover {
+  text-decoration: underline;
+}
+
+
+/* ==========================================================================
+   4i. INTERESTS
+   Deliberately lighter than the cards above; plain rows, no shadows.
+   ========================================================================== */
+.interests__list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem 2.5rem;
+}
+.interest {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1rem 0;
+  border-top: 1px solid var(--color-border); /* a quiet divider instead of a box */
+}
+.interest i {
+  font-size: 1.3rem;
+  color: var(--color-sage-deep);
+  margin-top: 0.2rem;
+}
+.interest h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+}
+.interest p {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+
+/* ==========================================================================
+   4j. CONTACT
+   ========================================================================== */
+.contact__grid {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr; /* form gets more room than the link list */
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+.field {
+  display: flex;
+  flex-direction: column;      /* label sits above its input */
+  gap: 0.4rem;
+  margin-bottom: 1.1rem;
+}
+.field label {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--color-moss);
+}
+.field input,
+.field textarea {
+  font: inherit;               /* inputs don't inherit font by default, so force it */
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-ink);
+  resize: vertical;            /* let users grow the textarea, not shrink it sideways */
+}
+
+.contact__aside h3 {
+  font-size: 1.15rem;
+  margin-bottom: 1rem;
+}
+.socials {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.socials a {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--color-ink);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  word-break: break-word;
+}
+.socials a:hover {
+  color: var(--color-clay-deep);
+}
+.socials i {
+  color: var(--color-sage-deep);
+  width: 1.5rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+
+/* ==========================================================================
+   5. SCROLL FADE-IN
+   The .reveal class starts an element slightly lower and transparent.
+   The JavaScript adds .is-visible when it scrolls into view, and the
+   transition below animates the change.
+
+   Guarded by `.js` so that if JavaScript is off, elements are never hidden.
+   ========================================================================== */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+
+/* ==========================================================================
+   6. RESPONSIVE: MEDIA QUERIES
+   Written desktop-first here: these rules apply AT or BELOW the given width.
+   ========================================================================== */
+
+/* --- Tablet and below: collapse the nav into a hamburger menu --- */
+@media (max-width: 900px) {
+  .nav__toggle {
+    display: inline-flex; /* show the hamburger button */
+  }
+
+  /* The menu becomes a dropdown panel anchored under the header */
+  .nav__list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    background-color: var(--color-cream);
+    border-bottom: 1px solid var(--color-border);
+    padding: 0.5rem clamp(1.25rem, 5vw, 2.5rem) 1.25rem;
+
+    /* Hidden state: collapsed to zero height and not clickable... */
+    transform: scaleY(0);
+    transform-origin: top;
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+  /* ...open state: full height and interactive. Toggled by JavaScript. */
+  .nav__list.is-open {
+    transform: scaleY(1);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav__link {
+    display: block;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+}
+
+/* --- Small tablet / large phone: stack the two-column layouts --- */
+@media (max-width: 800px) {
+  .about,
+  .contact__grid {
+    grid-template-columns: 1fr; /* one column, stacked */
+  }
+  /* Show the portrait before the text feels odd; keep text first, portrait after.
+     (Default source order already does this, so nothing else needed.) */
+  .about__portrait {
+    max-width: 22rem;
+    margin-inline: auto;
+  }
+}
+
+/* --- Phones: tighten type and spacing a little --- */
+@media (max-width: 480px) {
+  .hero {
+    min-height: 70vh;
+  }
+  .project-card__links {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+
+/* ==========================================================================
+   6b. RESPECT "REDUCED MOTION"
+   Some people get motion sickness from animation. If their OS is set to
+   "reduce motion", we switch everything off; no fades, no smooth scroll.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  /* Freeze the portrait slideshow on the first photo instead of looping */
+  .slideshow__img {
+    animation: none !important;
+    opacity: 0;
+  }
+  .slideshow__img:first-child {
+    opacity: 1;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
