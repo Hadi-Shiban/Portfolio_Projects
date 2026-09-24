@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[BUSINESS NAME] | Organic sprouts, Ogden Valley</title>
+  <meta name="description" content="A small home project growing organic broccoli, amaranth, and quinoa sprouts in Ogden Valley, Utah, and an honest look at how they're kept safe." />
+  <meta name="theme-color" content="#f6f2e9" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html" data-site="businessName">[BUSINESS NAME]</a>
+      <nav aria-label="Main">
+        <a href="#safety">How I keep them safe</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ HERO: layered photo collage ============
+         Swap any image by replacing the file in /images with your own
+         photo using the SAME filename (or change the src below). -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="collage">
+        <img class="collage__base" src="images/hero-sprouts.jpg"
+             alt="A jar of fresh green sprouts, close up" width="1800" height="1200" />
+
+        <figure class="piece piece--house reveal">
+          <img src="images/collage-house.jpg" alt="The house in Ogden Valley where the sprouts are grown" width="800" height="600" />
+        </figure>
+        <figure class="piece piece--close1 reveal">
+          <img src="images/collage-closeup-1.jpg" alt="Close-up of broccoli sprouts" width="600" height="600" />
+        </figure>
+        <figure class="piece piece--road reveal">
+          <img src="images/collage-road.jpg" alt="The country road leading to the house, with mountains behind" width="800" height="600" />
+        </figure>
+        <figure class="piece piece--close2 reveal">
+          <img src="images/collage-closeup-2.jpg" alt="Close-up of amaranth sprouts" width="600" height="750" />
+        </figure>
+      </div>
+
+      <div class="hero__text reveal">
+        <h1 id="hero-title" data-site="businessName">[BUSINESS NAME]</h1>
+        <p data-site="tagline">Small-batch organic sprouts, grown carefully in Ogden Valley.</p>
+      </div>
+    </section>
+
+    <!-- ============ HOW I KEEP THEM SAFE ============ -->
+    <section class="section" id="safety" aria-labelledby="safety-title">
+      <div class="wrap">
+        <p class="eyebrow reveal">Liberty &amp; Eden, Utah</p>
+        <h2 id="safety-title" data-reveal-words>How I keep them safe</h2>
+        <p class="intro" data-reveal-words>
+          I grow organic broccoli, amaranth, and quinoa sprouts in small batches at home.
+          Sprouts need warm, damp conditions to grow, so care at every step matters. Here is what I do.
+        </p>
+
+        <ol class="safety-list" data-reveal-stagger>
+          <li>I start with organic, lab-tested seed from True Leaf Market and record every lot number.</li>
+          <li>My well water is tested for coliform and E.&nbsp;coli, then filtered before it touches a seed.</li>
+          <li>Every jar, tub, and tool is washed and sanitized between batches.</li>
+          <li>Sprouts grow in small batches, drained well and kept at a steady temperature.</li>
+          <li>They're harvested, dried, and refrigerated right away, then given out within 1–2 days.</li>
+          <li>Every container is labeled with its harvest date and seed lot.</li>
+        </ol>
+
+        <a class="quiet-link reveal" href="protocol.html">See the full process →</a>
+      </div>
+    </section>
+
+    <!-- ============ HONEST NOTE ============ -->
+    <section class="section section--sage" aria-labelledby="note-title">
+      <div class="wrap">
+        <div class="note reveal">
+          <h2 id="note-title">An honest note</h2>
+          <p>
+            Even with careful growing, raw sprouts carry some risk of foodborne illness.
+            People who are pregnant, young children, older adults, and anyone with a weakened
+            immune system should avoid eating them raw.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p><strong data-site="businessName">[BUSINESS NAME]</strong></p>
+      <p data-site="location">Ogden Valley, Utah</p>
+      <p>Contact: <span data-site="contact">[contact email or phone]</span></p>
+      <p class="fine">
+        A small home project, not a store: nothing here is for sale.
+        · <a href="protocol.html">Full process</a>
+        · © <span data-year>2026</span>
+      </p>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
